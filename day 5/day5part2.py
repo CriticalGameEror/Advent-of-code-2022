@@ -1,4 +1,3 @@
-
 f = open("input.txt")
 input = f.readlines()
 f.close()
@@ -36,14 +35,18 @@ for x in range(len(instrucs)):
     instrucs[x].remove("to")
 
 for instruc in instrucs:
+    # ensures that the stacklist has enough stacks to insert the new items
     while len(stacks) < int(instruc[2])-1:
         stacks.append([])
+    
+    append_list = []
     for item in range(int(instruc[0])):
-        move_list = stacks[int(instruc[1])-1][-1:]
+        append_list.append(stacks[int(instruc[1])-1].pop(-1))
+    for index in range((len(append_list))-1, -1, -1):
+        stacks[int(instruc[2])-1].append(append_list[index])
 
 answer = []
 for item in stacks:
     answer.append(item[-1])
 
 print("".join(answer))
-
