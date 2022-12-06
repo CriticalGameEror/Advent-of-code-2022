@@ -1,3 +1,4 @@
+
 f = open("input.txt")
 input = f.readlines()
 f.close()
@@ -38,7 +39,7 @@ for instruc in instrucs:
     while len(stacks) < int(instruc[2])-1:
         stacks.append([])
     for item in range(int(instruc[0])):
-        stacks[int(instruc[2])-1].append(stacks[int(instruc[1])-1].pop(-1))
+        move_list = stacks[int(instruc[1])-1][-1:]
 
 answer = []
 for item in stacks:
