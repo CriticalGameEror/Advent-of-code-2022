@@ -51,7 +51,7 @@ for command in input:
         elif command[1] == "ls":
             isListing = True
 
-thing = []
+# builds the size of the dirs
 def fileSize(dir):
     for file in dir.fileList:
         if type(file) == Dir:
@@ -62,8 +62,9 @@ def fileSize(dir):
     
 fileSize(rootDir)
 
-freeSpace = 70000000 - rootDir.size
+freeSpace = 70000000 - rootDir.size # gets the free space in the system
 
+# finds all the dirs that (if removed) will give enough free space
 dirs = []
 def smallestDelete(dir):
     if freeSpace + dir.size >= 30000000:
@@ -74,12 +75,9 @@ def smallestDelete(dir):
 
 smallestDelete(rootDir)
 
-smallest = 100000000000
-current = None
+# sorts each dir by the smallest value
+sortList = []
 for dir in dirs:
-    if dir.size < smallest:
-        smallest = dir.size
-        current = dir
-
-print(current.size)
-
+    sortList.append(dir.size)
+sortList.sort()
+print(sortList[0])
