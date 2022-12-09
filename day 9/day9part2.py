@@ -1,4 +1,3 @@
-import math
 f = open("input.txt")
 input = f.read().split()
 f.close()
@@ -22,7 +21,7 @@ visited.append(head.loc.copy()) # appends the starting position
 
 # checks if the parent and current knots are touching
 def checkAgacent(parent, current):
-    if math.fabs(parent.loc[0] - current.loc[0]) > 1 or math.fabs(parent.loc[1] - current.loc[1]) > 1:
+    if abs(parent.loc[0] - current.loc[0]) > 1 or abs(parent.loc[1] - current.loc[1]) > 1:
         return False
     return True
     
