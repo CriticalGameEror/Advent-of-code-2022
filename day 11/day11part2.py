@@ -24,7 +24,7 @@ class Monkey:
         self.total = 0 # the amount of items inspected
     
     # returns who the item should be thrown to
-    def throwItem(self):
+    def throwItem(self, lcm):
         # gets the first item in the list
         currentItem = int(self.items.pop(0))
         if self.operation[1] == "old": # if it is multiplying by itself
@@ -33,6 +33,7 @@ class Monkey:
             currentItem = findOperator(self.operation[0], currentItem, int(self.operation[1]))
             
         self.total += 1
+        currentItem = currentItem % lcm
 
         if currentItem % self.test[0] == 0:
             return [self.test[1], currentItem]
@@ -42,8 +43,9 @@ class Monkey:
     def addItem(self, item):
         self.items.append(item)
 
-
 monkeyList = []
+
+testNumbList = [] # contains all the test numbers
 
 items = []
 operation = []
@@ -58,15 +60,21 @@ for x in range(1, len(input)):
         operation = [input[x+2], input[x+3]]
     elif input[x] == "by":
         test = [int(input[x+1]), int(input[x+7]), int(input[x+13])]
+        testNumbList.append(int(input[x+1])) # adds a test number when it is seen
         monkeyList.append(Monkey(items, operation, test))
         items = []
         operation = []
         test = []
 
+# calculates the LCM of all the numbers in testNumList
+lcm = 1
+for number in testNumbList:
+    lcm = math.lcm(lcm, number)
+
 currentMonkey = 0
 for round in range(10000 * len(monkeyList)):
     while len(monkeyList[currentMonkey].items) != 0:
-        dest = monkeyList[currentMonkey].throwItem()
+        dest = monkeyList[currentMonkey].throwItem(lcm)
         monkeyList[dest[0]].addItem(dest[1])
     
     currentMonkey = (currentMonkey+1) % len(monkeyList)
