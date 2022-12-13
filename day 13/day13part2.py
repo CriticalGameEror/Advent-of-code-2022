@@ -3,24 +3,29 @@ with open("input.txt") as f:
 
 def findList(toFind, x=0):
     newList = []
-    while x < len(toFind):
+    while x < len(toFind)-1:
         if toFind[x] == "[":
             find = findList(toFind, x+1)
             newList.append(find[0])
             x = find[1]
-            continue
         elif toFind[x] == "]":
-            return [newList, x+1]
-        elif toFind[x] != ",":
-            newList.append(int(toFind[x]))
-        x += 1
-    return [newList, x]
+            x += 1
+            return [newList, x]
+        elif toFind[x] == ",":
+            x += 1
+        else:
+            number = ""
+            while toFind[x] != "," and toFind[x] != "[" and toFind[x] != "]" and x < len(toFind)-1:
+                number += toFind[x]
+                x += 1
+            newList.append(int(number))
+    return newList
+
 
 # more means that the index1 is more than index2 which is invalid
 # equal means index1 is the same as index2
 # less means that index1 is less than index2 which is valid
 
-# issue: if list 1 is one length and list 2 is multi length. If two elements are equal, it says it is more when it is not
 def compare(list1, list2):
     index1 = 0
     index2 = 0
@@ -74,33 +79,22 @@ def compare(list1, list2):
 
 packets = []
 for packet in input:
-    packets.append(findList(packet[1:])[0])
+    packets.append(findList(packet[1:]))
 
-pairs = []
-for pair in range(0, len(packets), 2):
-    pairs.append([packets[pair], packets[pair+1]])
+packets.append([[2]])
+packets.append([[6]])
 
-# inOrder = []
-# for pair in pairs:
-#     compared = compare(pair[0], pair[1])
-#     if compared == "less" or compared == "equal":
-#         inOrder.append(True)
-#     else:
-#         inOrder.append(False)
+hit = True
+while hit == True:
+    hit = False
+    for x in range(0,len(packets)-1):
+        compared = compare(packets[x], packets[x+1])
+        if compared == "more":
+            packets[x], packets[x+1] = packets[x+1], packets[x]
+            hit = True
 
-print(compare([[7,7],6,[],5,[3,3]], [5,[4,6]]))
-
-# total = 0
-# for x in range(len(inOrder)):
-#     if inOrder[x] == True:
-#         total += (x+1)
-# print(total)
-
-# True
-# True
-# False
-# True
-# False
-# True
-# False
-# False
+total = 1
+for x in range(len(packets)):
+    if packets[x] == [[2]] or packets[x] == [[6]]:
+        total *= (x+1)
+print(total)
