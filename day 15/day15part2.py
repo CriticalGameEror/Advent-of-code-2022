@@ -1,3 +1,4 @@
+# with help from https://www.reddit.com/r/adventofcode/comments/zmcn64/comment/j0ant0s/?utm_source=share&utm_medium=web2x&context=3
 with open("input.txt") as f:
     input = f.read().split()
 
@@ -30,23 +31,3 @@ for x in range(0, len(input), 10):
 for sensor in sensors:
     if sensor.distance > highestDist:
         highestDist = sensor.distance
-
-def findBeacon():
-    for x in range(0, 4000001):
-        for y in range(0, 4000001):
-            print(x,y)
-            toBreak = False
-            cords = []
-            for sensor in sensors:
-                if abs(x - sensor.location[0]) + abs(y - sensor.location[1]) > sensor.distance:
-                    cords = [x, y]
-                    toBreak = True
-                else:
-                    toBreak = False
-                    break
-            if toBreak:
-                return cords
-
-
-loc = findBeacon()
-print((loc[0]*4000000) + loc[1])
