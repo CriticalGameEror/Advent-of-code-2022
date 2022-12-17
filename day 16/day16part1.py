@@ -28,15 +28,8 @@ for word in input:
         caves.append(word.strip(","))
 valves[valveLetter] = [rate, caves]
 
-def findDistances(valve, total=0, visited=[], distances={}):
-    visited.append(valve)
-    for v in valves[valve][1]:
-        if v not in visited:
-            distances[v] = total+1
-    
-    return distances
 
-for valve in valves:
-    valves[valve].append(findDistances(valve))
 
-print(valves["BB"])
+
+
+        
