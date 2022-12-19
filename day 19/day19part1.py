@@ -139,7 +139,7 @@ def findHighestGeode(materials, robots, blueprint, goalRobot, time=24):
 
         # starts another loop if the goal is found
         if goalReached:
-            if int(materials["geode"] + (time) * time+1 / 2) <= maxGeode: # if its not possible to generate enough geodes in the best possible scenario
+            if int(robots["geode"] + materials["geode"] + ((time-1)*(time/2))) < maxGeode: # if its not possible to generate enough geodes in the best possible scenario
                 return
             findHighestGeode(materials.copy(), robots.copy(), blueprint.copy(), "ore", time)
             findHighestGeode(materials.copy(), robots.copy(), blueprint.copy(), "clay", time)
