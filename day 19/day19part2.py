@@ -1,3 +1,4 @@
+# help from: https://www.reddit.com/r/adventofcode/comments/zpihwi/comment/j0tls7a/?utm_source=share&utm_medium=web2x&context=3
 with open("input.txt") as f:
     input = f.read().split()
 
