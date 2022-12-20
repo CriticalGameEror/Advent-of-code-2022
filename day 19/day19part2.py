@@ -4,7 +4,7 @@ with open("input.txt") as f:
 # BFS during each min, branches to make every type of bot out of the 4
 
 maxGeode = 0
-def findHighestGeode(materials, robots, blueprint, goalRobot, time=24):
+def findHighestGeode(materials, robots, blueprint, goalRobot, time=32):
     global maxGeode
     # checks if the goal robot is possible to make
     if goalRobot == "obsidian" and robots["clay"] == 0:
@@ -72,8 +72,11 @@ materials = {"ore": 0, "clay": 0, "obsidian": 0, "geode": 0} # the materials tha
 robots = {"ore": 1, "clay": 0, "obsidian": 0, "geode": 0} # the robots currently constructed
 blueprint = {} # how much each robot costs
 bluePrintNumb = 1
-maxGeodes = []
+total = 1
 for x in range(0, len(input), 32):
+    if bluePrintNumb == 4:
+        break
+
     # assigns blueprint values
     blueprint["ore"] = {input[x+7].strip("."): int(input[x+6])}
     blueprint["clay"] = {input[x+13].strip("."): int(input[x+12])}
@@ -82,13 +85,11 @@ for x in range(0, len(input), 32):
 
     findHighestGeode(materials.copy(), robots.copy(), blueprint.copy(), "ore")
     findHighestGeode(materials.copy(), robots.copy(), blueprint.copy(), "clay")
-    maxGeodes.append([bluePrintNumb, maxGeode])
+    total *= maxGeode
+    print(maxGeode)
     print(bluePrintNumb)
 
     maxGeode = 0
     bluePrintNumb += 1
 
-total = 0
-for geode in maxGeodes:
-    total += geode[0] * geode[1]
-print(total, maxGeodes)
+print(total)
