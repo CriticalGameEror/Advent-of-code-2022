@@ -40,10 +40,7 @@ class Root(Monkey):
         self.second = second
 
     def equal(self, first, second):
-        if first == second:
-            return True
-        else:
-            return False
+        return abs(first - second)
 
 monkeys = {}
 
@@ -85,10 +82,27 @@ def findMoneky(currentMonkey):
         calc = monkeys[currentMonkey].calc
         return monkeys[currentMonkey].add(findMoneky(calc[0]), findMoneky(calc[2]))
 
-match = False
-number = 0
-while match == False:
-    monkeys["humn"].setNumber(number)
+'''
+A manual approach. Scan a range of numbers. See the lowest difference that was achieved from the two root values and the humn value this occured at. 
+Ammend the range search to be more specific to the lowest value found. 
+Continue to change the range until it is specific enough to loop through each number in increments of 1
+Once the difference is zero, the correct value to shout has been found
+'''
+
+
+highest = [None, None] # for testing purposes, to see the highest difference and the x value it occured at
+for x in range(3219579390000, 3219579397000, 1): 
+    monkeys["humn"].setNumber(x)
     match = findMoneky("root")
-    print(number)
-    number += 1
+    print(match, x)
+    if int(match) == 0:
+        print(x)
+        exit()
+    if highest[0] == None:
+        highest[0] = match
+        highest[1] = x
+    elif match < highest[0]:
+        highest[0] = match
+        highest[1] = x
+
+print(highest)
