@@ -83,6 +83,5 @@ for number in input:
 print(total)
 
 print(findSnafu(total))
-#hello
     
 
